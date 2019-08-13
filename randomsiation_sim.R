@@ -183,7 +183,7 @@ sim_results <- future_map_dfr(1:5000, ~sim_rep(trt_seq = trt_seq,
 toc()
 
 #Saving
-paste("rand_sim", gsub(":", "-", Sys.time()), ".rdata", sep="") %>% 
+paste("rand_sim", gsub(":", "_", Sys.time()), ".rdata", sep="") %>% 
   save(sim_results, file = .)
 
 ## Section: Processing simulation results   ##################################################
@@ -214,7 +214,7 @@ theme_set(theme_light(base_size = 15))
     scale_colour_brewer(type = "div", palette = 6)
   
   analysed_results_long %>% 
-    filter(variable != "n" & (percentile == "Median" | percentile == "99th")) %>% 
+    filter(variable != "n" & percentile != "95th") %>% 
     ggplot(aes(x = imbalance, y = variable, colour = rand_method)) +
     geom_jitter(size = 2, width = 0, height = 0.2) +
     labs(x = "Max. imbalance", colour = "Randomisation method", title = "Imbalance in covariates") +
